@@ -1,0 +1,72 @@
+# PROJECT DOCUMENTATION
+## PROJECT 1 : Overall Plan
+
+Week 1 - 2 ->  Exploring
+Week 3 -> Design
+Week 4 - 5 -> Code
+Week 6 - 7 -> Testing 
+Week 8 -> POC, Iteration, Project Validation
+**TOTAL 60 days [2 months]**
+
+## Problem Statement
+For Redaction, build an alternative tool that can replace the sensitive content of pdf with redacted data as per user choice for mechanism of redaction. The current redactor speed has scope for improvement.
+
+### Exploration
+
+**Week 1:** Went through some scientific papers and articles regarding different methods of redaction used for born-digital documents, and learnt about the use of regular expression for finding text of a certain pattern.
+
+**Week 2:** Tried implementation of josh pdf-redactor. Discussion about finding PIIs from different buckets. Tried finding regexes of common PIIs in plain text like PAN, Aadhar, IFSC Code, Bank account number, etc.
+Also implemented basic methods of conversion of pdf to plain text(Text Extraction) and tried to understand Named Entity Recognition and its use in our current project.
+
+**Week 3:** 
+
+### Design
+TBD
+
+### Code
+TBD
+
+
+
+### Testing
+TBD
+
+### POC, Iteration, Project Validation
+TBD
+
+
+# PROJECT 2 : Overall Plan
+
+Week 1 -> Exploration and Design
+Week 2 -> Code
+Week 3 -> Testing
+Week 4 -> POC, Iteration, Project Validation
+**TOTAL 30 days [1 month]**
+
+### Problem Statement
+Build UI for Document Parser configurability
+
+### Exploration
+TBD
+
+### Design
+TBD
+
+### Code
+TBD
+
+### Testing
+TBD
+
+### POC, Iteration, Project Validation
+TBD
+
+
+
+
+Testing
+TBD
+
+POC, Iteration, Project Validation
+TBD
+
