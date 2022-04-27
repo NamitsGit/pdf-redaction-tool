@@ -1,7 +1,7 @@
 # PROJECT DOCUMENTATION
 ## PROJECT 1 : Overall Plan
 
-Week 1 - 2 ->  Exploring
+<br>Week 1 - 2 ->  Exploring</br>
 Week 3 -> Design
 Week 4 - 5 -> Code
 Week 6 - 7 -> Testing 
@@ -14,7 +14,7 @@ For Redaction, build an alternative tool that can replace the sensitive content 
 ### Exploration
 
 **Week 1:** Went through some scientific papers and articles regarding different methods of redaction used for born-digital documents, and learnt about the use of regular expression for finding text of a certain pattern.
-
+---
 **Week 2:** Tried implementation of josh pdf-redactor. Discussion about finding PIIs from different buckets. Tried finding regexes of common PIIs in plain text like PAN, Aadhar, IFSC Code, Bank account number, etc.
 Also implemented basic methods of conversion of pdf to plain text(Text Extraction) and tried to understand Named Entity Recognition and its use in our current project.
 
