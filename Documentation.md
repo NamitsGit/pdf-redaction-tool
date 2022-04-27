@@ -1,5 +1,5 @@
 # PROJECT DOCUMENTATION
-===============================
+------------
 ## PROJECT 1 : Overall Plan
 
 <br>Week 1 - 2 ->  Exploring</br>
