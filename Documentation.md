@@ -36,38 +36,3 @@ TBD
 TBD
 
 
-# PROJECT 2 : Overall Plan
-
-Week 1 -> Exploration and Design
-Week 2 -> Code
-Week 3 -> Testing
-Week 4 -> POC, Iteration, Project Validation
-**TOTAL 30 days [1 month]**
-
-### Problem Statement
-Build UI for Document Parser configurability
-
-### Exploration
-TBD
-
-### Design
-TBD
-
-### Code
-TBD
-
-### Testing
-TBD
-
-### POC, Iteration, Project Validation
-TBD
-
-
-
-
-Testing
-TBD
-
-POC, Iteration, Project Validation
-TBD
-
