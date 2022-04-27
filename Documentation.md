@@ -3,10 +3,10 @@
 ## PROJECT 1 : Overall Plan
 
 <br>Week 1 - 2 ->  Exploring</br>
-Week 3 -> Design
-Week 4 - 5 -> Code
-Week 6 - 7 -> Testing 
-Week 8 -> POC, Iteration, Project Validation
+Week 3 -> Design &nbsp;
+Week 4 - 5 -> Code &nbsp;
+Week 6 - 7 -> Testing &nbsp;
+Week 8 -> POC, Iteration, Project Validation &nbsp;
 **TOTAL 60 days [2 months]**
 
 ## Problem Statement
