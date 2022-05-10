@@ -18,11 +18,11 @@
 <br>**Week 2:** Tried implementation of josh pdf-redactor. Discussion about finding **PIIs from different buckets**. Tried finding regexes of common PIIs in plain text like PAN, Aadhar, IFSC Code, Bank account number, etc.
 Also implemented basic methods of conversion of pdf to plain text(Text Extraction) and tried to understand **Named Entity Recognition** and its use in our current project.</br>
 
-<br>**Week 3:** Searched for different modules and methods available for modification of pdf, tried extraction of pdf files with python modules. Basic implementation of regex patterns that would be applicable.</br>
+<br>**Week 3:** Searched for different modules and methods available for **modification of pdf**, tried extraction of pdf files with python modules. Basic implementation of **regex patterns** that would be applicable.</br>
 
-<br>**Week 4:** Pattern identification of first 3 buckets of different types implemented. Identification of orphan text with salutations can be identified. Implementation of NER tried by using spacy. PDF layout aware modification tried.
-PyMuPDF functionalities explored, also explored other functionalities of pdfrw for pdf modification.
-Layout analyzer utility of PyMuPDF implemented to extract the layout of pdf files. Other demos and examples explored.</br>
+<br>**Week 4:** Pattern identification of first 3 buckets of different types implemented. Identification of **orphan text** with salutations can be identified. Implementation of NER tried by using spacy. PDF layout aware modification tried.
+**PyMuPDF utilities** explored, also explored other functionalities of pdfrw for pdf modification.
+**Layout analyzer** utility of PyMuPDF implemented to extract the layout of pdf files. Other demos and examples explored.</br>
 
 <br>**Week 5: **
 <br>
