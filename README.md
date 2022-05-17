@@ -11,5 +11,4 @@ Aadhar Number: 0123 4567 8910 -->  XXXX XXXX XXXX
 | Filename | Description |
 | :--- | :--- |
 | pii_regex.py | Used to find patterns in text like PAN, Aadhar, IFSC code, Phone Number, People names, etc. |
-| test_regex.py | Used to test the regex patterns on sample plain text(meant to be used after text extraction from pdf files) |
 | extract_text.py | Used to extract text from a pdf file and store the text of pdf file into a .txt file with the same filename. |
