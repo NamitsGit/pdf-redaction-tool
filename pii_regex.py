@@ -3,16 +3,20 @@ import re
 
 def find_entities_with_prefixes(s):
     list_of_entities = []
-    # FINDING all the occurrences where the prefix is in the form of Mr./MR./Mr /MR/Ms./MS>/Ms/MS /
-    regex1 = 'M[r|R|s|S][.\s]*\w+\s\w+\s?\w+'
+    # FINDING all the occurrences where the prefix is in the form of mr./Mr./MR./Mr /MR/Ms./MS>/Ms/MS /
+    regex1 = '[M|m][r|R|s|S][.\s]*\w+\s\w+\s?\w+'
     p1 = re.compile(regex1)
     list_of_entities = re.findall(p1, s)
 
     # FINDING all the occurrences where the prefix is in the form of Mrs./MRS./Mrs /MRS /
-    regex1 = 'M[R|r][S|s][.\s]*\w+\s\w+\s?\w+'
-    p2 = re.compile(regex1)
+    regex2 = 'M[R|r][S|s][.\s]*\w+\s\w+\s?\w+'
+    p2 = re.compile(regex2)
     list_of_entities.extend(re.findall(p2, s))
-
+    
+    # FINDING all the occurances where the prefix is in the for of Dr./DR./dr./ ---- <prefix>Firstname Lastname
+    regex3 = '[D|d][r|R][.\s]*\w+\s\w+\s?\w+'
+    p3 = re.compile(regex3)
+    list_of_entities.extend(re.findall(p3,s))
     return list_of_entities
 
 def find_phone_number_in_text(s):
