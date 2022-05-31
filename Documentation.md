@@ -24,7 +24,8 @@ Also implemented basic methods of conversion of pdf to plain text(Text Extractio
 **PyMuPDF utilities** explored, also explored other functionalities of pdfrw for pdf modification.
 **Layout analyzer** utility of PyMuPDF implemented to extract the layout of pdf files. Other demos and examples explored.</br>
 
-<br>**Week 5: ** 
+<br>**Week 5:**
+Tried different pdf modification techniques and implemented different regrex patterns on the sample files.
 <br>
 
 ### Design
