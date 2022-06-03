@@ -25,7 +25,23 @@ Also implemented basic methods of conversion of pdf to plain text(Text Extractio
 **Layout analyzer** utility of PyMuPDF implemented to extract the layout of pdf files. Other demos and examples explored.</br>
 
 <br>**Week 5:**
-Tried different pdf modification techniques and implemented different regrex patterns on the sample files.
+Explored about metadata of PDF files.
+Tried code related to annotations.
+Tested different pdf modification techniques based on annotations and implemented different regrex patterns on the sample files.
+<br>
+
+<br>**Week 6:**
+Tried code related to characters stream extraction and editing.
+Learnt different methods of modifying the characters stream.
+<br>
+
+<br>**Week 7:**
+Tried and tested code on some other sample bank statements, and made minor corrections in regular expressions.
+Tried to redact orphan data like addresses and names.
+<br>
+
+<br>**Week 8:**
+Tried methods to correct problems faced during redaction of orphan data.
 <br>
 
 ### Design
