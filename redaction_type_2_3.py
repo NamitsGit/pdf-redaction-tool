@@ -1,129 +1,210 @@
-
-from io import StringIO
-import string
 import fitz
 import re
-import json
-from flask import Flask ,request
+import time
 
-app = Flask(__name__)
-output =""
-a={"nm" : r"/home/namit/Desktop/perfios/proj/new" }
-p= a["nm"]
-input1= ""
-input2= ""
-input3= ""
+# Flags
+email = 1
+ifsc= 1
+accno= 1
+cardno= 1
+phoneno= 1
+panno= 1
+name= 1
+addr= 1
+black_bar = 0
+dashed_accno = 1
 
-
-# output = request.get_json()
-@app.route("/result",methods=["Post"," Get"])
-def result():
-    input1= request.form['path']
-    input2= request.form['ifsc']
-    input3= request.form['accno']
-    #	path=output["name"]
-    redactor = Redactor(input1,input2,input3)
-    redactor.redaction(input2,input3)
-    #	name = output["name"]
-    cal = {}
-    cal['filepath'] = p
-    return (cal)
-
+check_inside = 0
 
 class Redactor:
 
     # static methods work independent of class object
     @staticmethod
-    def get_sensitive_data(lines,inp2,inp3):
-
+    def get_sensitive_data(lines):
         """ Function to get all the lines """
+        special_acc_no = []
 
-        # email regex
+        # ESSENTIALS
         EMAIL_REG = r"([\w\.\d]+\@[\w\d]+\.[\w\d]+)"
         IFSC_REG = r"([A-Z]{4}0[A-Z0-9]{6})"
         ACC_REG = r"(0*[0-9]{9,18})"
-        CARD_REG = r"([0-9]{4}\s?\-?[0-9]{4}\s?\-?[0-9]{4}\s?\-?[0-9]{4})"
-        PHONE_REG = r"(\+?[0-9]{0,2}\s*[0-9]{5}\s?[0-9]{5})"
-        PAN_REG = r"([A-Z]{5}[0-9]{4}[A-Z]{1})"
-        NAME_MR_MS = r"([M|m][r|R|s|S][.\s]*\w+\s\w+\s?\w+)"
-        NAME_TAGGED = r"Name\s?\:?\s?\w+\s?\w+"
-        # ADDR_REG = r"(address\s?\:?\.*\w+\s?\,?\w+\s?\,?)"
-        ADDR_REG2 = r"(([N|n][O|o])?\.?\s?\w+\s?\,?\w+\/\w+\s?[^(0-9{4})])"
-        ADDR_PIN_REG = r"(\w+\,?\s?\w+\s?\-?\s?[0-9]{6})"
-        # NAME_TITLE = r"(name:)"
-        # NAME_MRS = r"(M[R|r][S|s][.\s]*\w+\s\w+\s?\w+)"
-        # NAME_DR = r"([D|d][r|R][.\s]*\w+\s\w+\s?\w+)"
+        CARD_REG = r"([0-9]{4}[\s\-][0-9]{4}[\s\-][0-9]{4}[\s\-][0-9]{4})"
+        PAN_REG = r"([A-Z]{4}(A|B|C|F|G|H|L|J|P|T){1}[0-9]{4}[A-Z]{1})"
+        NAME_MR_MS = r"(^[M|m][r|R|s|S][.\s]*\w+\s\w+\s?\w+)"
+
+
+        # TAGGED REGEXES
+        ACC_TAG = r"Account\s?(Number)?(no)?\.?\s?\:?\s?([0-9]{9,18})"
+        ACC_DASH = r"Account\s?(Number)?(no)?\.?\s?\:?\s?(\w+\-\s?\w+\-\w+)"
+        NAME_TAG = r"Name\s?\:?\s?(\w+[^\S\r\n]+(\w+)?)"
+        CITY_TAG = r"City\s?\:?\s?(\w+)"
+        PIN_TAG = r"Pin\s?\:?\s?(\w+)"
+
+        total_changes = 0
+        c_email = re.compile(EMAIL_REG, re.IGNORECASE)
+        c_ifsc = re.compile(IFSC_REG, re.IGNORECASE)
+        c_card = re.compile(CARD_REG, re.IGNORECASE)
+        c_pan = re.compile(PAN_REG, re.IGNORECASE)
+        c_name_mr_ms = re.compile(NAME_MR_MS, re.IGNORECASE)
+        c_acc = re.compile(ACC_TAG, re.IGNORECASE)
+        c_acc_dash = re.compile(ACC_DASH, re.IGNORECASE)
+        c_name = re.compile(NAME_TAG, re.IGNORECASE)
+        c_pin = re.compile(PIN_TAG, re.IGNORECASE)
+        c_city = re.compile(CITY_TAG, re.IGNORECASE)
+        c_acc_like = re.compile(ACC_REG, re.IGNORECASE)
+
         for line in lines:
+            redacted_in_line = []
 
-            # matching the regex to each line
-            if inp2=="yes":
-                if re.search(IFSC_REG, line, re.IGNORECASE):
-                    search = re.search(IFSC_REG, line, re.IGNORECASE)
-                    yield search.group(1)
-                # yields creates a generator
-                # # generator is used to return
-                # values in between function iterations
+            search = c_email.search(line)
+            if search and email == 1:
+                total_changes += 1
+                yield search.group(1)
 
-            if inp3=="yes":
-                if re.search(ACC_REG, line, re.IGNORECASE):
-                    search = re.search(ACC_REG, line, re.IGNORECASE)
+            search = c_acc_like.search(line)
+            if search and accno == 1:
+
+                if search.group(1) not in redacted_in_line:
+                    redacted_in_line.append(search.group(1))
                     yield search.group(1)
-                # yields creates a generator
-                # # generator is used to return
-                # # values in between function iterations
+                    total_changes += 1
+
+            search = c_ifsc.search(line)
+            if search and ifsc == 1:
+                total_changes += 1
+                yield search.group(1)
+
+            search = c_card.search(line)
+            if search and cardno == 1:
+                total_changes += 1
+                if search.group(1) not in redacted_in_line:
+                    redacted_in_line.append(search.group(1))
+                    yield search.group(1)
+
+            search = c_acc.search(line)
+            if search and accno == 1:
+                total_changes += 1
+                if search.group(3) not in redacted_in_line:
+                    redacted_in_line.append(search.group(1))
+                    yield search.group(3)
+
+            search = c_pan.search(line)
+            if search and panno == 1:
+                total_changes += 1
+                yield search.group(1)
+
+            if c_name_mr_ms.search(line) and name == 1:
+                search = c_name_mr_ms.search(line)
+                total_changes += 1
+                yield search.group(1)
+
+            if c_name.search(line) and name == 1:
+                search = c_name.search(line)
+                total_changes += 1
+                yield search.group(1)
+            #
+            search = c_acc_dash.search(line)
+            if search and dashed_accno == 1:
+                special_acc_no.append(search.group(3))
+                for x in special_acc_no:
+                    c_dashed_acc = re.compile(x)
+                    search = c_dashed_acc.search(line)
+
+                    if search :
+                        total_changes += 1
+                        if search.group() not in redacted_in_line:
+                            redacted_in_line.append(search.group())
+                            yield search.group()
+
+            # search = c_branch.search(line)
+            # if search and addr == 1:
+            #     print("BRANCH --", search.group(1), " in line ", line)
+            #     yield search.group(1)
+
+            search = c_pin.search(line)
+            if search and addr == 1:
+                total_changes += 1
+                if search.group(1) not in redacted_in_line:
+                    redacted_in_line.append(search.group(1))
+                    yield search.group(1)
+
+            search = c_city.search(line)
+
+            if search and addr == 1:
+                total_changes += 1
+                if search.group(1) not in redacted_in_line:
+                    redacted_in_line.append(search.group(1))
+                    yield search.group(1)
+
+
 
     # constructor
-    def __init__(self, path,inp2,inp3):
+    def __init__(self, path):
         self.path = path
 
-    def redaction(self,inp2,inp3):
+    def redaction(self):
 
         """ main redactor code """
 
         # opening the pdf
         doc = fitz.open(self.path)
-
+        total_redactions = 0
         # iterating through pages
         for page in doc:
+            # print(page.get_fonts())
 
             # _wrapContents is needed for fixing
             # alignment issues with rect boxes in some
             # cases where there is alignment issue
-            page.wrapContents()
+            page.wrap_contents()
+
 
             # getting the rect boxes which consists the matching email regex
-            sensitive = self.get_sensitive_data(page.getText("text")
-                                                .split('\n'),inp2,inp3)
-            for data in sensitive:
-                areas = page.searchFor(data)
+            sensitive = self.get_sensitive_data(page.get_text("text")
+                                                .split('\n'))
 
+            for data in sensitive:
+                areas = page.search_for(data)
                 # drawing outline over sensitive datas
-                [page.addRedactAnnot(area, fill = (0, 0, 0)) for area in areas]
+                total_redactions += len(areas)
+                [page.add_redact_annot(area, text="X" * len(data), fill=(1, 1, 1)) for area in areas]
 
             # applying the redaction
             page.apply_redactions()
 
         # saving it to a new pdf
-        doc.save('output/redacted.pdf')
-        print("Successfully redacted")
+        doc.save(path[:-4] + '-redacted_ALL_timed.pdf')
+        print("SUCCESSFULLY REDACTED THE FILE  : ", str(path))
+
+        print("\nSAVED FILE PATH : ",str(path[:-4] + "-redacted_ALL_timed.pdf"))
+        print("\nTOTAL REDACTIONS DONE IS : ", total_redactions)
+
 
 
 # driver code for testing
 if __name__ == "__main__":
-    app.run(debug=True, port=2000)
-    # path = 'tests/CAAxis1.pdf'
+    # replace it with name of the pdf file
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    path = input("Enter a valid path : ")
+    redactor = Redactor(path)
+    start_time = time.time()
+    # email = 1
+    # ifsc = 1
+    # accno = 1
+    # cardno = 1
+    # phoneno = 1
+    # panno = 1
+    # name = 1
+    # addr = 1
+    # email = int(input("EMAIL : "))
+    # ifsc = int(input("IFSC CODE : "))
+    # accno = int(input("ACCOUNT NO. : "))
+    # cardno = int(input("CARD NO. : "))
+    # phoneno = int(input("PHONE NO. : "))
+    # panno = int(input("PAN NO. : "))
+    # name = int(input("NAME : "))
+    # addr = int(input("ADDRESS : "))
+    print("--------------------------------REPORT-----------------------------------")
+    redactor.redaction()
+    end_time = time.time()
+    print("\nTotal runtime of redaction using MUPDF is : {}".format(end_time-start_time))
