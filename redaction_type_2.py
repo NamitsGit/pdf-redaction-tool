@@ -10,9 +10,11 @@ cardno= 1
 phoneno= 1
 panno= 1
 name= 1
-addr= 1
-black_bar = 0
-dashed_accno = 1
+pin = 1
+city = 1
+
+black_bar = 1
+dashed_accno = 0
 
 check_inside = 0
 
@@ -116,13 +118,9 @@ class Redactor:
                             redacted_in_line.append(search.group())
                             yield search.group()
 
-            # search = c_branch.search(line)
-            # if search and addr == 1:
-            #     print("BRANCH --", search.group(1), " in line ", line)
-            #     yield search.group(1)
 
             search = c_pin.search(line)
-            if search and addr == 1:
+            if search and pin == 1:
                 total_changes += 1
                 if search.group(1) not in redacted_in_line:
                     redacted_in_line.append(search.group(1))
@@ -130,7 +128,7 @@ class Redactor:
 
             search = c_city.search(line)
 
-            if search and addr == 1:
+            if search and city == 1:
                 total_changes += 1
                 if search.group(1) not in redacted_in_line:
                     redacted_in_line.append(search.group(1))
@@ -167,16 +165,24 @@ class Redactor:
                 areas = page.search_for(data)
                 # drawing outline over sensitive datas
                 total_redactions += len(areas)
-                [page.add_redact_annot(area, text="X" * len(data), fill=(1, 1, 1)) for area in areas]
+                if black_bar != 0:
+                    [page.add_redact_annot(area, fill=(0, 0, 0)) for area in areas]
+                else:
+                    [page.add_redact_annot(area, text="X" * len(data), fill=(1, 1, 1)) for area in areas]
 
             # applying the redaction
             page.apply_redactions()
 
-        # saving it to a new pdf
-        doc.save(path[:-4] + '-redacted_ALL_timed.pdf')
         print("SUCCESSFULLY REDACTED THE FILE  : ", str(path))
+        # saving it to a new pdf
+        if black_bar != 0:
+            doc.save(path[:-4] + '-redacted_black_timed.pdf')
+            print("\nSAVED FILE PATH : ",str(path[:-4] + "-redacted_black_timed.pdf"))
 
-        print("\nSAVED FILE PATH : ",str(path[:-4] + "-redacted_ALL_timed.pdf"))
+        else:
+            doc.save(path[:-4] + '-redacted_mask_timed.pdf')
+            print("\nSAVED FILE PATH : ", str(path[:-4] + "-redacted_black_timed.pdf"))
+
         print("\nTOTAL REDACTIONS DONE IS : ", total_redactions)
 
 
@@ -188,22 +194,6 @@ if __name__ == "__main__":
     path = input("Enter a valid path : ")
     redactor = Redactor(path)
     start_time = time.time()
-    # email = 1
-    # ifsc = 1
-    # accno = 1
-    # cardno = 1
-    # phoneno = 1
-    # panno = 1
-    # name = 1
-    # addr = 1
-    # email = int(input("EMAIL : "))
-    # ifsc = int(input("IFSC CODE : "))
-    # accno = int(input("ACCOUNT NO. : "))
-    # cardno = int(input("CARD NO. : "))
-    # phoneno = int(input("PHONE NO. : "))
-    # panno = int(input("PAN NO. : "))
-    # name = int(input("NAME : "))
-    # addr = int(input("ADDRESS : "))
     print("--------------------------------REPORT-----------------------------------")
     redactor.redaction()
     end_time = time.time()
