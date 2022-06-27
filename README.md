@@ -12,4 +12,3 @@ Aadhar Number: 0123 4567 8910 -->  XXXX XXXX XXXX
 | :--- | :--- |
 | pii_regex.py | Used to find patterns in text like PAN, Aadhar, IFSC code, Phone Number, People names, etc. |
 | extract_text.py | Used to extract text from a pdf file and store the text of pdf file into a .txt file with the same filename. |
-| NER_bucket4.py | This file is used to find orphan person-name-fields in the given text. |
