@@ -119,11 +119,7 @@ class Redactor:
 						redacted_acc_like_nos.append(search.group(1))
 						yield search.group(1)
 
-			
-			# if "name" in data_list:
-			# 	if name_tag.search(line):
-			# 		search = name_tag.search(line)
-			# 		yield search.group(1)
+
 
 	# constructor
 	def __init__(self, path,data_list):
